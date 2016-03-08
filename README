@@ -1,1 +1,12 @@
+        location /myhttp {
+            default_type "text/html";
+
+            browser_deny "Trident";
+            browser_deny "curl";
+
+            content_by_lua_block {
+                ngx.say("nginx lua openresty redis http2 zhangbiwu");
+            }
+        }
+
 http://blog.sina.com.cn/s/blog_15753dca00102w4xa.html
