@@ -1,12 +1,23 @@
-        location /myhttp {
-            default_type "text/html";
-
-            browser_deny "Trident";
-            browser_deny "curl";
-
-            content_by_lua_block {
-                ngx.say("nginx lua openresty redis http2 zhangbiwu");
-            }
+        location /mytraffic {
+            traffic_statistics request_times packet_bytes status_codes;
         }
 
-http://blog.sina.com.cn/s/blog_15753dca00102w4xa.html
+        location /mytraffic1 {
+            traffic_statistics request_times;
+        }
+
+        location /mytraffic2 {
+            traffic_statistics packet_bytes;
+        }
+
+        location /mytraffic3 {
+            traffic_statistics status_codes;
+        }
+
+        log_by_lua_file /usr/local/nginx/lua/traffic/get_traffic_info.lua;
+        location /mytraffic_lua {
+            default_type "text/html";
+            content_by_lua_file /usr/local/nginx/lua/traffic/show_traffic_info.lua;
+        }
+
+http://blog.sina.com.cn/s/blog_15753dca00102w75h.html
