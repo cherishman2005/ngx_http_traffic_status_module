@@ -231,28 +231,24 @@ ngx_http_traffic_status_set(ngx_conf_t *cf, ngx_command_t *cmd, void *conf)
 	ngx_uint_t    i;
 	ngx_str_t    *value;
 	ngx_http_core_loc_conf_t  *clcf = NULL;
-	char *p = conf;
-	ngx_uint_t *fp = NULL;
+	ngx_http_traffic_status_local_conf_t *tslc = conf;
 
 	value = cf->args->elts;
 	for (i = 1; i < cf->args->nelts; i++)
 	{
 	    if (ngx_strcasecmp(value[i].data, (u_char *) "request_times") == 0) 
 		{
-			fp = (ngx_uint_t *)(p + offsetof(ngx_http_traffic_status_local_conf_t, req_flag));
-	        *fp = 1;
+	        tslc->req_flag = 1;
 			continue;
 	    } 
 		else if (ngx_strcasecmp(value[i].data, (u_char *) "packet_bytes") == 0) 
 		{
-	        fp = (ngx_uint_t *)(p + offsetof(ngx_http_traffic_status_local_conf_t, pkt_flag));
-			*fp= 1;
+			tslc->pkt_flag = 1;
 			continue;
 	    } 
 		else if (ngx_strcasecmp(value[i].data, (u_char *) "status_codes") == 0) 
 		{
-	        fp = (ngx_uint_t *)(p + offsetof(ngx_http_traffic_status_local_conf_t, status_flag));
-			*fp= 1;
+			tslc->status_flag = 1;
 			continue;
 	    } 
 		else
